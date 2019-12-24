@@ -9,16 +9,8 @@ namespace NumberGuessingGame
         // Entry Point Method
         static void Main(string[] args)
         {
-            // Set up application variables.
-            string appName = "Number Guessing Game";
-            string appVersion = "1.0.0";
-            string appAuthor = "Robert Nielsen";
-
-            // App Header Setup
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("{0}: Version {1} by {2}", appName, appVersion, appAuthor);
-            Console.ResetColor();
-
+            GetAppInfo();
+            
             // Gather user name info.
             Console.WriteLine();
             Console.WriteLine("What is your name?");
@@ -27,28 +19,81 @@ namespace NumberGuessingGame
             Console.WriteLine("Hello {0}, let's play a game...", userName);
             Console.WriteLine();
 
-            // Define correct number and guess number.
-            int correctNum = 7;
-            int guessNum = 0;
-
-            // Ask user for a number.
-            Console.WriteLine("Guess a number between 1 and 10.");
-
-            // Determine if number is correct.
-            while(guessNum != correctNum)
+            while(true) 
             {
-                string inputNum = Console.ReadLine();
-                guessNum = Int32.Parse(inputNum);
+                // Define correct random number and guess number.
+                Random ranNum = new Random();
+                int correctNum = ranNum.Next(1, 10);
+                int guessNum = 0;
 
-                if(guessNum != correctNum)
+                // Ask user for a number.
+                Console.WriteLine("Guess a number between 1 and 10.");
+
+                // Determine if number is correct.
+                while (guessNum != correctNum)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("{0} is not correct. Guess again...", guessNum);
-                    Console.WriteLine();
-                    Console.ResetColor();
+                    string inputNum = Console.ReadLine();
+
+                    // Validate the user entered a number.
+                    if (!int.TryParse(inputNum, out guessNum))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Please enter a number.");
+                        Console.WriteLine();
+                        Console.ResetColor();
+                        continue;
+                    }
+
+                    guessNum = Int32.Parse(inputNum);
+
+                    if (guessNum != correctNum)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("{0} is not correct. Guess again...", guessNum);
+                        Console.WriteLine();
+                        Console.ResetColor();
+                    }
                 }
+
+                // Output success message.
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Correct! {0} was the random number.", guessNum);
+                Console.WriteLine();
+                Console.ResetColor();
+
+                // Ask the user to play again.
+                Console.WriteLine("Do you want to play again? [Y or N]");
+                string guessAgain = Console.ReadLine().ToUpper();
+                Console.WriteLine();
+
+                if(guessAgain == "Y")
+                {
+                    continue;
+                } 
+                else if(guessAgain == "N")
+                {
+                    return;
+                }
+                else
+                {
+                    return;
+                }
+
             }
 
+        }
+
+        static void GetAppInfo()
+        {
+            // Set up application variables.
+            string appName = "Number Guessing Game";
+            string appVersion = "1.0.0";
+            string appAuthor = "Robert James Nielsen";
+
+            // App Header Setup
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("{0}: Version {1} by {2}", appName, appVersion, appAuthor);
+            Console.ResetColor();
         }
     }
 }
