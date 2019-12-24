@@ -10,14 +10,8 @@ namespace NumberGuessingGame
         static void Main(string[] args)
         {
             GetAppInfo();
-            
-            // Gather user name info.
-            Console.WriteLine();
-            Console.WriteLine("What is your name?");
-            string userName = Console.ReadLine();
-            Console.WriteLine();
-            Console.WriteLine("Hello {0}, let's play a game...", userName);
-            Console.WriteLine();
+
+            GreetUser();
 
             while(true) 
             {
@@ -37,10 +31,7 @@ namespace NumberGuessingGame
                     // Validate the user entered a number.
                     if (!int.TryParse(inputNum, out guessNum))
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Please enter a number.");
-                        Console.WriteLine();
-                        Console.ResetColor();
+                        PrintColorMessage(ConsoleColor.Red, "Please enter a number.");
                         continue;
                     }
 
@@ -48,18 +39,12 @@ namespace NumberGuessingGame
 
                     if (guessNum != correctNum)
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("{0} is not correct. Guess again...", guessNum);
-                        Console.WriteLine();
-                        Console.ResetColor();
+                        PrintColorMessage(ConsoleColor.Red, $"{guessNum} is not correct. Guess again...");
                     }
                 }
 
                 // Output success message.
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Correct! {0} was the random number.", guessNum);
-                Console.WriteLine();
-                Console.ResetColor();
+                PrintColorMessage(ConsoleColor.Green, $"Correct! {guessNum} was the random number.");
 
                 // Ask the user to play again.
                 Console.WriteLine("Do you want to play again? [Y or N]");
@@ -83,6 +68,7 @@ namespace NumberGuessingGame
 
         }
 
+        // Display app information.
         static void GetAppInfo()
         {
             // Set up application variables.
@@ -93,6 +79,26 @@ namespace NumberGuessingGame
             // App Header Setup
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("{0}: Version {1} by {2}", appName, appVersion, appAuthor);
+            Console.ResetColor();
+        }
+
+        // Ask the user their name, and greet them.
+        static void GreetUser()
+        {
+            // Gather user name info.
+            Console.WriteLine();
+            Console.WriteLine("What is your name?");
+            string userName = Console.ReadLine();
+            Console.WriteLine();
+            Console.WriteLine("Hello {0}, let's play a game...", userName);
+            Console.WriteLine();
+        }
+
+        static void PrintColorMessage(ConsoleColor color, string message)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(message);
+            Console.WriteLine();
             Console.ResetColor();
         }
     }
